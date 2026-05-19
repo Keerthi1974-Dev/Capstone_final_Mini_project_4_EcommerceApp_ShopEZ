@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <!-- TEST SDK -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+
+    <!-- XUNIT -->
+    <PackageReference Include="xunit" Version="2.9.0" />
+
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <!-- COVERAGE -->
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <!-- MOCKING -->
+    <PackageReference Include="Moq" Version="4.20.72" />
+
+    <!-- ASP.NET TESTING -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing"
+                      Version="8.0.7" />
+
+    <!-- EF IN MEMORY -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory"
+                      Version="8.0.17" />
+
+    <!-- ASSERTIONS -->
+    <PackageReference Include="FluentAssertions"
+                      Version="6.12.0" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrderService\OrderService.csproj" />
+  </ItemGroup>
+
+</Project>

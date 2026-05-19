@@ -1,0 +1,103 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "authservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/auth/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 1
+    },
+    {
+      "DownstreamPathTemplate": "/api/products/upload",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "productservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/products/upload",
+      "UpstreamHttpMethod": [ "POST" ],
+      "Priority": 5
+    },
+    {
+      "DownstreamPathTemplate": "/api/products/upload/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "productservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/products/upload/{id}",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "Priority": 5
+    },
+    {
+      "DownstreamPathTemplate": "/api/products",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "productservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/products",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Priority": 4
+    },
+    {
+      "DownstreamPathTemplate": "/api/products",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "productservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/products",
+      "UpstreamHttpMethod": [ "POST" ],
+      "Priority": 3
+    },
+    {
+      "DownstreamPathTemplate": "/api/products/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "productservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/products/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Priority": 3
+    },
+    {
+      "DownstreamPathTemplate": "/api/products/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "productservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/products/{id}",
+      "UpstreamHttpMethod": [ "PUT", "DELETE" ],
+      "Priority": 2
+    },
+    {
+      "DownstreamPathTemplate": "/api/orders",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "orderservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/orders",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 2,
+      "DownstreamHeaderTransform": {
+        "Authorization": "{header:Authorization}"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/orders/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "orderservice", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/orders/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 1,
+      "DownstreamHeaderTransform": {
+        "Authorization": "{header:Authorization}"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000"
+  }
+}
