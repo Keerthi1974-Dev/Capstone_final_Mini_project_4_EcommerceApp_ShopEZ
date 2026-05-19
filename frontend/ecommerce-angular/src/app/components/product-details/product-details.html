@@ -1,0 +1,85 @@
+<div class="page">
+  <button class="back-btn" (click)="goBack()">← Back to Products</button>
+
+  <!-- PRODUCT DETAILS -->
+  <div *ngIf="!loading && product as p; else loadingBlock" class="details-grid">
+
+    <div class="details-img-wrap">
+      <img
+        [src]="p.imageUrl || 'https://picsum.photos/seed/' + p.productId + '/600/600'"
+        [alt]="p.name"
+        (error)="p.imageUrl = 'https://picsum.photos/seed/' + p.productId + '/600/600'" />
+    </div>
+
+    <div class="details-content">
+      <span class="details-tag">Product Details</span>
+
+      <h1 class="details-name">{{ p.name }}</h1>
+
+      <div class="details-price">₹{{ p.price }}</div>
+
+      <p class="details-desc">{{ p.description }}</p>
+
+      <div class="details-meta">
+
+        <div class="meta-row">
+          <span class="meta-label">Availability</span>
+          <span
+            class="meta-value"
+            [style.color]="p.stock === 0 ? '#e53e3e' : '#059669'">
+            {{ p.stock === 0 ? 'Out of Stock' : 'In Stock' }}
+          </span>
+        </div>
+
+        <div class="meta-row">
+          <span class="meta-label">Units Available</span>
+          <span class="meta-value">{{ p.stock }}</span>
+        </div>
+
+        <div class="meta-row">
+          <span class="meta-label">Product ID</span>
+          <span class="meta-value">#{{ p.productId }}</span>
+        </div>
+
+      </div>
+
+      <!-- QUANTITY -->
+      <div class="qty-control" *ngIf="p.stock > 0">
+        <span class="qty-label">Quantity</span>
+
+        <div class="qty-btns">
+          <button class="qty-btn"
+                  (click)="decrement()"
+                  [disabled]="quantity <= 1">−</button>
+
+          <span class="qty-num">{{ quantity }}</span>
+
+          <button class="qty-btn"
+                  (click)="increment()"
+                  [disabled]="quantity >= p.stock">+</button>
+        </div>
+      </div>
+
+      <!-- ADD TO CART -->
+      <button class="btn-add-to-cart"
+              (click)="addToCart()"
+              [disabled]="p.stock === 0">
+        🛒 {{ p.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+      </button>
+
+      <!-- SUCCESS MESSAGE -->
+      <div class="added-toast" *ngIf="added">
+        ✓ {{ quantity }} item(s) added to cart!
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <ng-template #loadingBlock>
+    <div class="skeleton-img"
+         style="border-radius:20px; height:400px; margin-bottom:2rem;">
+    </div>
+  </ng-template>
+
+</div>

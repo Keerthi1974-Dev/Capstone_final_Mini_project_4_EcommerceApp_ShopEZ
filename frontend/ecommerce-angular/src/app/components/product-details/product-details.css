@@ -1,0 +1,339 @@
+/* ============================================================
+   PRODUCT DETAILS — CSS
+   Aesthetic: Refined editorial / luxury e-commerce
+   Font: Playfair Display (headings) + DM Sans (body)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+  --clr-bg:        #f7f5f2;
+  --clr-surface:   #ffffff;
+  --clr-border:    #e8e4de;
+  --clr-text:      #1a1714;
+  --clr-muted:     #7a7470;
+  --clr-accent:    #c8a96e;          /* warm gold */
+  --clr-accent-dk: #a8894e;
+  --clr-success:   #059669;
+  --clr-danger:    #e53e3e;
+  --clr-tag-bg:    #f0ebe3;
+  --clr-tag-text:  #8a6d3b;
+
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-btn:  0 4px 16px rgba(200,169,110,0.35);
+
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Page wrapper ─────────────────────────────────────────── */
+.page {
+  min-height: 100vh;
+  background: var(--clr-bg);
+  padding: 2rem 1.5rem 4rem;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--clr-text);
+}
+
+/* ── Back button ──────────────────────────────────────────── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: 1.5px solid var(--clr-border);
+  color: var(--clr-muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.5rem 1.1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  margin-bottom: 2.5rem;
+  transition: border-color var(--transition), color var(--transition),
+              background var(--transition);
+}
+.back-btn:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-accent-dk);
+  background: rgba(200,169,110,0.06);
+}
+
+/* ── Details grid ─────────────────────────────────────────── */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+@media (max-width: 820px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ── Image wrapper ────────────────────────────────────────── */
+.details-img-wrap {
+  position: sticky;
+  top: 2rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--clr-surface);
+  box-shadow: var(--shadow-card);
+  aspect-ratio: 1 / 1;
+}
+
+.details-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.details-img-wrap:hover img {
+  transform: scale(1.04);
+}
+
+/* ── Content panel ────────────────────────────────────────── */
+.details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0.5rem 0;
+}
+
+/* ── Tag ──────────────────────────────────────────────────── */
+.details-tag {
+  display: inline-block;
+  background: var(--clr-tag-bg);
+  color: var(--clr-tag-text);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 100px;
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+
+/* ── Product name ─────────────────────────────────────────── */
+.details-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--clr-text);
+  margin: 0 0 1rem;
+}
+
+/* ── Price ────────────────────────────────────────────────── */
+.details-price {
+  font-size: 1.65rem;
+  font-weight: 600;
+  color: var(--clr-accent-dk);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Description ──────────────────────────────────────────── */
+.details-desc {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--clr-muted);
+  line-height: 1.75;
+  margin: 0 0 2rem;
+}
+
+/* ── Meta rows ────────────────────────────────────────────── */
+.details-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--clr-border);
+  border-bottom: 1px solid var(--clr-border);
+  margin-bottom: 2rem;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--clr-border);
+}
+.meta-row:last-child {
+  border-bottom: none;
+}
+
+.meta-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+}
+
+.meta-value {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--clr-text);
+}
+
+/* ── Quantity control ─────────────────────────────────────── */
+.qty-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.qty-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+}
+
+.qty-btns {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid var(--clr-border);
+  border-radius: 100px;
+  overflow: hidden;
+  background: var(--clr-surface);
+}
+
+.qty-btn {
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--clr-text);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background: var(--clr-accent);
+  color: #fff;
+}
+
+.qty-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.qty-num {
+  min-width: 42px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--clr-text);
+  border-left: 1.5px solid var(--clr-border);
+  border-right: 1.5px solid var(--clr-border);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Add to Cart button ───────────────────────────────────── */
+.btn-add-to-cart {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: var(--clr-text);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-add-to-cart::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.08));
+  pointer-events: none;
+}
+
+.btn-add-to-cart:hover:not(:disabled) {
+  background: var(--clr-accent-dk);
+  box-shadow: var(--shadow-btn);
+  transform: translateY(-2px);
+}
+
+.btn-add-to-cart:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-add-to-cart:disabled {
+  background: #d4cfc9;
+  color: #a09890;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ── Toast ────────────────────────────────────────────────── */
+.added-toast {
+  margin-top: 1rem;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: var(--clr-success);
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  animation: fadeSlideIn 0.3s ease forwards;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Skeleton / Loading ───────────────────────────────────── */
+.skeleton-img {
+  background: linear-gradient(
+    90deg,
+    #ede9e3 25%,
+    #f5f2ed 50%,
+    #ede9e3 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

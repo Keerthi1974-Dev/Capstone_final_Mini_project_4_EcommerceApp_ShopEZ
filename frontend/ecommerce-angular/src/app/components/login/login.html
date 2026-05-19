@@ -1,0 +1,84 @@
+<div class="auth-wrapper">
+  <div class="auth-left">
+    <div class="brand-content">
+      <div class="brand-logo">
+        <span class="logo-icon">🛍️</span>
+        <span class="logo-text">ShopEZ</span>
+      </div>
+      <h1 class="brand-headline">Your one-stop<br/>shopping destination</h1>
+      <p class="brand-sub">Thousands of products. Fast delivery. Great prices.</p>
+      <div class="feature-list">
+        <div class="feature-item"><span class="fi-icon">✓</span> Curated product catalog</div>
+        <div class="feature-item"><span class="fi-icon">✓</span> Secure checkout</div>
+        <div class="feature-item"><span class="fi-icon">✓</span> Order tracking</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-subtitle">Sign in to your ShopEZ account</p>
+
+      <div class="error-banner" *ngIf="error">
+        <span class="err-icon">⚠</span> {{ error }}
+      </div>
+
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" novalidate>
+
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input
+            class="form-input"
+            [class.input-error]="emailField.invalid && emailField.touched"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            [(ngModel)]="email"
+            #emailField="ngModel"
+            required
+            email
+          />
+          <div class="field-error" *ngIf="emailField.invalid && emailField.touched">
+            <span *ngIf="emailField.errors?.['required']">Email is required</span>
+            <span *ngIf="emailField.errors?.['email']">Enter a valid email address</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-with-icon">
+            <input
+              class="form-input"
+              [class.input-error]="passField.invalid && passField.touched"
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              placeholder="Enter your password"
+              [(ngModel)]="password"
+              #passField="ngModel"
+              required
+              minlength="6"
+            />
+            <button type="button" class="toggle-pass" (click)="showPassword = !showPassword">
+              {{ showPassword ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          <div class="field-error" *ngIf="passField.invalid && passField.touched">
+            <span *ngIf="passField.errors?.['required']">Password is required</span>
+            <span *ngIf="passField.errors?.['minlength']">Minimum 6 characters required</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" type="submit" [disabled]="loading">
+          <span *ngIf="!loading">Sign In</span>
+          <span *ngIf="loading" class="spinner-text">Signing in...</span>
+        </button>
+
+      </form>
+
+      <p class="auth-switch">
+        Don't have an account? <a routerLink="/register" class="auth-link">Create one</a>
+      </p>
+    </div>
+  </div>
+</div>

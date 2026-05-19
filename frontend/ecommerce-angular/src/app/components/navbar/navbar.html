@@ -1,0 +1,41 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="nav-brand" routerLink="/products">
+      <span class="brand-icon">🛍️</span>
+      <span class="brand-name">ShopEZ</span>
+    </a>
+
+    <div class="nav-links" [class.nav-open]="menuOpen">
+      <a class="nav-link" routerLink="/products" routerLinkActive="active" (click)="menuOpen=false">
+        Products
+      </a>
+
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <a class="nav-link" routerLink="/orders" routerLinkActive="active" (click)="menuOpen=false">
+          My Orders
+        </a>
+        <a class="nav-link cart-link" routerLink="/cart" routerLinkActive="active" (click)="menuOpen=false">
+          🛒
+          <span class="cart-badge" *ngIf="cartService.getCount() > 0">{{ cartService.getCount() }}</span>
+        </a>
+        <div class="nav-user">
+          <span class="user-avatar">{{ authService.getUser()?.name?.charAt(0)?.toUpperCase() }}</span>
+          <span class="user-name">{{ authService.getUser()?.name }}</span>
+          <span class="user-role" [class.admin-badge]="authService.isAdmin()">
+            {{ authService.isAdmin() ? 'Admin' : 'User' }}
+          </span>
+        </div>
+        <button class="btn-logout" (click)="authService.logout()">Logout</button>
+      </ng-container>
+
+      <ng-container *ngIf="!authService.isLoggedIn()">
+        <a class="btn-login" routerLink="/login" (click)="menuOpen=false">Sign In</a>
+        <a class="btn-register" routerLink="/register" (click)="menuOpen=false">Register</a>
+      </ng-container>
+    </div>
+
+    <button class="hamburger" (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>

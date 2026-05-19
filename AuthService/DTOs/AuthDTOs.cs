@@ -24,7 +24,7 @@ namespace AuthService.DTOs
     public class TokenResponseDTO
     {
         public string Token { get; set; } = string.Empty;
-        public string RefreshToken { get; set; } = string.Empty;  // added so frontend can store it
+        public string RefreshToken { get; set; } = string.Empty;  // Refresh token is aadded so frontend can store it
         public UserDTO User { get; set; } = new();
     }
 

@@ -32,7 +32,7 @@ namespace AuthService.Controllers
             if (!success)
                 return Conflict(new { message = "Email already exists." });
 
-            return Ok(new { message = "User registered successfully." });
+            return Ok(new { message = "User registered successfully...!!" });
         }
 
         // POST: api/auth/login
@@ -52,7 +52,7 @@ namespace AuthService.Controllers
             var refreshToken = _authService.GenerateRefreshToken();
             await _authService.SaveRefreshTokenAsync(user, refreshToken);
 
-            // FIX: return RefreshToken in response so frontend can store it
+            // it return RefreshToken in response so frontend can store it
             return Ok(new TokenResponseDTO
             {
                 Token = token,
@@ -81,7 +81,7 @@ namespace AuthService.Controllers
             var newRefreshToken = _authService.GenerateRefreshToken();
             await _authService.SaveRefreshTokenAsync(user, newRefreshToken);
 
-            // FIX: return new RefreshToken so frontend updates it
+            // it return new RefreshToken so frontend updates it
             return Ok(new TokenResponseDTO
             {
                 Token = newToken,
@@ -110,7 +110,7 @@ namespace AuthService.Controllers
             user.RefreshTokenExpiry = null;
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Logged out successfully." });
+            return Ok(new { message = "Logged out successfully!!" });
         }
 
         // GET: api/auth/me

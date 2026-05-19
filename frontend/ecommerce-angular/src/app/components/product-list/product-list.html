@@ -1,0 +1,173 @@
+<div class="page">
+
+  <!-- ══ HERO BANNER ══ -->
+  <div class="hero-banner">
+    <div class="hero-content">
+      <div class="hero-tag">✦ New Collection 2026</div>
+      <h1 class="hero-title">Dress to <span>Impress</span></h1>
+      <p class="hero-desc">Curated fashion for the modern Indian woman</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="stat-num">{{ products.length }}+</span>
+        <span class="stat-label">Products</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">9</span>
+        <span class="stat-label">Categories</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">★ 4.8</span>
+        <span class="stat-label">Rating</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOP BAR ══ -->
+  <div class="topbar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input
+        class="search-input"
+        type="text"
+        placeholder="Search sarees, jewellery, bags…"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearch()"
+      />
+      <!-- Suggestions Dropdown -->
+      <div class="suggestions-box" *ngIf="showSuggestions">
+        <div
+          class="suggestion-item"
+          *ngFor="let s of suggestions"
+          (click)="pickSuggestion(s)">
+          <span class="sug-icon">🔍</span>
+          <span class="sug-name">{{ s.name }}</span>
+          <span class="sug-price">₹{{ s.price | number }}</span>
+        </div>
+      </div>
+    </div>
+
+    <span class="result-count">{{ filtered.length }} items</span>
+    <button
+  class="btn-add-product"
+  *ngIf="authService.isAdmin()"
+  (click)="goToAddProduct($event)">
+  ＋ Add Product
+</button>
+    
+
+
+  </div>
+
+  <!-- ══ CATEGORY PILLS ══ -->
+  <div class="category-bar">
+    <button
+      class="cat-pill"
+      *ngFor="let cat of categories"
+      [class.active]="activeCategory === cat.label"
+      (click)="filterByCategory(cat.label)">
+      {{ cat.icon }} {{ cat.label }}
+    </button>
+  </div>
+
+  <!-- ══ SKELETON LOADER ══ -->
+  <div class="products-grid" *ngIf="loading">
+    <div class="product-card skeleton-card" *ngFor="let s of skeletons">
+      <div class="product-img-wrap skeleton-shimmer" style="height:240px;"></div>
+      <div class="product-body" style="gap:10px;display:flex;flex-direction:column;padding:1.1rem;">
+        <div class="skeleton-shimmer" style="height:18px;border-radius:6px;width:75%;"></div>
+        <div class="skeleton-shimmer" style="height:13px;border-radius:6px;width:90%;"></div>
+        <div class="skeleton-shimmer" style="height:13px;border-radius:6px;width:60%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PRODUCT GRID ══ -->
+  <div class="products-grid" *ngIf="!loading && filtered.length > 0">
+    <div
+      class="product-card"
+      *ngFor="let product of filtered; let i = index"
+      [style.animation-delay]="getDelay(i)">
+
+      <!-- Image -->
+      <div class="product-img-wrap" (click)="viewDetails(product.productId)">
+        <img
+          [src]="product.imageUrl || 'assets/images/placeholder.jpg'"
+          [alt]="product.name"
+          loading="lazy"
+          (error)="product.imageUrl = 'assets/images/placeholder.jpg'"
+        />
+
+        <span class="product-badge badge-hot"
+              *ngIf="product.stock > 0 && product.stock <= 5">🔥 Hot</span>
+        <span class="product-badge badge-new"
+              *ngIf="product.productId <= 3">New</span>
+        <span class="product-badge badge-out"
+              *ngIf="product.stock === 0">Sold Out</span>
+
+        <!-- Wishlist -->
+        <button
+          class="wishlist-btn"
+          [class.wishlisted]="wishlist.has(product.productId)"
+          title="Wishlist"
+          (click)="toggleWishlist(product); $event.stopPropagation()">
+          <span *ngIf="wishlist.has(product.productId)">❤️</span>
+          <span *ngIf="!wishlist.has(product.productId)">♡</span>
+        </button>
+
+        <div class="img-overlay">
+          <span>Quick View</span>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="product-body">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-desc">{{ product.description }}</div>
+
+        <div class="product-footer">
+          <div class="product-price">₹{{ product.price | number }}</div>
+          <div class="product-stock" [ngClass]="getStockClass(product.stock)">
+            {{ getStockLabel(product.stock) }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="product-actions">
+        <button
+          class="btn-details"
+          (click)="viewDetails(product.productId); $event.stopPropagation()">
+          Details
+        </button>
+
+        <button
+          class="btn-cart"
+          [class.btn-added]="addedId === product.productId"
+          (click)="addToCart(product); $event.stopPropagation()"
+          [disabled]="product.stock === 0">
+          <span *ngIf="addedId !== product.productId && product.stock > 0">🛒 Add</span>
+          <span *ngIf="addedId === product.productId">✓ Added!</span>
+          <span *ngIf="product.stock === 0">Sold Out</span>
+        </button>
+
+        <ng-container *ngIf="authService.isAdmin()">
+          <button class="btn-edit"
+                  (click)="router.navigate(['/admin/products', product.productId, 'edit']); $event.stopPropagation()">✏</button>
+          <button class="btn-delete"
+                  (click)="deleteProduct(product.productId); $event.stopPropagation()">🗑</button>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ EMPTY STATE ══ -->
+  <div class="empty-state" *ngIf="!loading && filtered.length === 0">
+    <div class="empty-icon">🛍️</div>
+    <div class="empty-title">No products found</div>
+    <p style="color:#7c7c90;font-size:0.9rem;">Try a different search or category</p>
+    <button class="btn-reset" (click)="filterByCategory('All'); search = ''">Reset Filters</button>
+  </div>
+
+</div>

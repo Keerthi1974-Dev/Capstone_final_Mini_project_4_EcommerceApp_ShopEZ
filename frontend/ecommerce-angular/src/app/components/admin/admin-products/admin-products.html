@@ -1,0 +1,126 @@
+<div class="admin-container">
+
+  <!-- Header -->
+  <div class="admin-header">
+    <h2>🛍️ Manage Products</h2>
+    <button class="btn-add" (click)="toggleForm()">
+      {{ showForm ? '✕ Cancel' : '+ Add Product' }}
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div class="msg-success" *ngIf="message">{{ message }}</div>
+  <div class="msg-error" *ngIf="error">{{ error }}</div>
+
+  <!-- Add Product Form -->
+  <div class="add-form" *ngIf="showForm">
+    <h3>➕ Add New Product</h3>
+
+    <!-- Name & Category -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Product Name *</label>
+        <input [(ngModel)]="name" placeholder="e.g. Banaras Silk Saree" />
+      </div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select [(ngModel)]="category">
+          <option value="Women">Women</option>
+          <option value="Men">Men</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label>Description</label>
+      <textarea [(ngModel)]="description" rows="3"
+        placeholder="Describe the product..."></textarea>
+    </div>
+
+    <!-- Price & Stock -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Price (₹) *</label>
+        <input type="number" [(ngModel)]="price"
+          placeholder="e.g. 1299" min="1" />
+      </div>
+      <div class="form-group">
+        <label>Stock *</label>
+        <input type="number" [(ngModel)]="stock"
+          placeholder="e.g. 50" min="0" />
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="form-group">
+      <label>Product Image *</label>
+      <div class="upload-box">
+        <input type="file" accept="image/*"
+          (change)="onFileSelected($event)"
+          id="fileInput" hidden />
+        <label for="fileInput" class="upload-label">
+          📁 {{ selectedFile ? selectedFile.name : 'Click to upload image from PC' }}
+        </label>
+      </div>
+      <div class="or-divider">— OR —</div>
+      <input [(ngModel)]="imageUrl"
+        placeholder="Paste Cloudinary image URL..."
+        [disabled]="!!selectedFile" />
+      <div class="preview-container" *ngIf="previewUrl || imageUrl">
+        <img [src]="previewUrl || imageUrl"
+          class="img-preview" alt="Preview"
+          (error)="previewUrl = null; imageUrl = ''" />
+        <span class="preview-label">✅ Image Preview</span>
+      </div>
+    </div>
+
+    <button class="btn-submit" (click)="addProduct()" [disabled]="loading">
+      {{ loading ? '⏳ Adding...' : '✅ Add Product' }}
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="loading && !showForm">
+    ⏳ Loading products...
+  </div>
+
+  <!-- Products Table -->
+  <table *ngIf="!loading && products.length > 0">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td>
+          <img [src]="p.imageUrl" [alt]="p.name" class="table-img"
+            (error)="$any($event.target).src='https://via.placeholder.com/60'" />
+        </td>
+        <td>{{ p.name }}</td>
+        <td>
+          <span class="category-tag">{{ p.category }}</span>
+        </td>
+        <td>₹{{ p.price | number:'1.0-0' }}</td>
+        <td>{{ p.stock }}</td>
+        <td>
+          <button class="btn-delete" (click)="deleteProduct(p.productId)">
+            🗑️ Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Empty -->
+  <div class="empty" *ngIf="!loading && products.length === 0">
+    📦 No products yet. Click "+ Add Product" to get started!
+  </div>
+
+</div>

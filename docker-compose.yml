@@ -1,0 +1,65 @@
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "YourStrong@Pass123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+
+  authservice:
+    build:
+      context: ./EcommerceApp/AuthService
+    container_name: authservice
+    ports:
+      - "5003:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+    depends_on:
+      - sqlserver
+
+  productservice:
+    build:
+      context: ./EcommerceApp/ProductService
+    container_name: productservice
+    ports:
+      - "5001:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+    depends_on:
+      - sqlserver
+
+  orderservice:
+    build:
+      context: ./EcommerceApp/OrderService
+    container_name: orderservice
+    ports:
+      - "5002:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+    depends_on:
+      - sqlserver
+
+  apigateway:
+    build:
+      context: ./EcommerceApp/ApiGateway
+    container_name: apigateway
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+    depends_on:
+      - authservice
+      - productservice
+      - orderservice
+
+  frontend:
+    build:
+      context: ./frontend/ecommerce-angular
+    container_name: frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - apigateway

@@ -36,7 +36,7 @@ public class JwtAuthServiceTests : IDisposable
 
     public void Dispose() => _context.Dispose();
 
-    // ── RegisterAsync ─────────────────────────────────────────────────────────
+    // ── RegisterAsync ─────────────
 
     [Fact]
     public async Task RegisterAsync_NewUser_ReturnsTrue()

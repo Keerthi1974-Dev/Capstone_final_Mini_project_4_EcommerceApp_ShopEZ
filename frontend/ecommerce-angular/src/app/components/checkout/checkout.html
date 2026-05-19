@@ -1,0 +1,278 @@
+<div class="checkout-page">
+
+  <!-- ══ SUCCESS BANNER ══════════════════════════════════ -->
+  <div class="success-banner" *ngIf="message">
+    <div class="success-icon">🎉</div>
+    <div>
+      <strong>Order Placed Successfully!</strong>
+      <p>{{ message }}</p>
+      <p class="redirect-note">Redirecting to your orders...</p>
+    </div>
+  </div>
+
+  <!-- ══ ERROR BANNER ════════════════════════════════════ -->
+  <div class="err-banner" *ngIf="error">⚠ {{ error }}</div>
+
+  <ng-container *ngIf="!message">
+
+    <!-- ══ STEP INDICATOR ════════════════════════════════ -->
+    <div class="steps-bar">
+      <div class="step" [class.step-active]="currentStep >= 1" [class.step-done]="currentStep > 1">
+        <div class="step-circle">{{ currentStep > 1 ? '✓' : '1' }}</div>
+        <span class="step-label">Address</span>
+      </div>
+      <div class="step-line" [class.line-done]="currentStep > 1"></div>
+      <div class="step" [class.step-active]="currentStep >= 2" [class.step-done]="currentStep > 2">
+        <div class="step-circle">{{ currentStep > 2 ? '✓' : '2' }}</div>
+        <span class="step-label">Payment</span>
+      </div>
+      <div class="step-line" [class.line-done]="currentStep > 2"></div>
+      <div class="step" [class.step-active]="currentStep >= 3">
+        <div class="step-circle">3</div>
+        <span class="step-label">Review</span>
+      </div>
+    </div>
+
+    <div class="checkout-layout">
+
+      <!-- ══ LEFT PANEL ══════════════════════════════════ -->
+      <div class="checkout-left">
+
+        <!-- ── STEP 1: DELIVERY ADDRESS ───────────────── -->
+        <div class="checkout-card" *ngIf="currentStep === 1">
+          <div class="card-title">📦 Delivery Address</div>
+
+          <div class="err-inline" *ngIf="addressError">⚠ {{ addressError }}</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input class="form-input" type="text" placeholder="Priya Sharma"
+                [(ngModel)]="address.fullName" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <input class="form-input" type="tel" placeholder="10-digit mobile number"
+                [(ngModel)]="address.phone" maxlength="10" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Street Address *</label>
+            <input class="form-input" type="text" placeholder="House No, Street, Landmark"
+              [(ngModel)]="address.street" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">City *</label>
+              <input class="form-input" type="text" placeholder="Chennai"
+                [(ngModel)]="address.city" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">State *</label>
+              <input class="form-input" type="text" placeholder="Tamil Nadu"
+                [(ngModel)]="address.state" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pincode *</label>
+              <input class="form-input" type="text" placeholder="600001"
+                [(ngModel)]="address.pincode" maxlength="6" />
+            </div>
+          </div>
+
+          <button class="btn-next" (click)="proceedToPayment()">
+            Continue to Payment →
+          </button>
+        </div>
+
+        <!-- ── STEP 2: PAYMENT METHOD ─────────────────── -->
+        <div class="checkout-card" *ngIf="currentStep === 2">
+          <div class="card-title">💳 Select Payment Method</div>
+
+          <div class="err-inline" *ngIf="paymentError">⚠ {{ paymentError }}</div>
+
+          <!-- Payment Options -->
+          <div class="payment-options">
+
+            <!-- UPI -->
+            <label class="pay-option" [class.pay-selected]="selectedPayment === 'upi'">
+              <input type="radio" name="payment" value="upi" [(ngModel)]="selectedPayment" />
+              <div class="pay-icon">📱</div>
+              <div class="pay-info">
+                <div class="pay-name">UPI</div>
+                <div class="pay-desc">Pay via PhonePe, GPay, Paytm</div>
+              </div>
+              <div class="pay-check" *ngIf="selectedPayment === 'upi'">✓</div>
+            </label>
+
+            <!-- Credit / Debit Card -->
+            <label class="pay-option" [class.pay-selected]="selectedPayment === 'card'">
+              <input type="radio" name="payment" value="card" [(ngModel)]="selectedPayment" />
+              <div class="pay-icon">💳</div>
+              <div class="pay-info">
+                <div class="pay-name">Credit / Debit Card</div>
+                <div class="pay-desc">Visa, Mastercard, Rupay</div>
+              </div>
+              <div class="pay-check" *ngIf="selectedPayment === 'card'">✓</div>
+            </label>
+
+            <!-- Net Banking -->
+            <label class="pay-option" [class.pay-selected]="selectedPayment === 'netbanking'">
+              <input type="radio" name="payment" value="netbanking" [(ngModel)]="selectedPayment" />
+              <div class="pay-icon">🏦</div>
+              <div class="pay-info">
+                <div class="pay-name">Net Banking</div>
+                <div class="pay-desc">All major banks supported</div>
+              </div>
+              <div class="pay-check" *ngIf="selectedPayment === 'netbanking'">✓</div>
+            </label>
+
+            <!-- Cash on Delivery -->
+            <label class="pay-option" [class.pay-selected]="selectedPayment === 'cod'">
+              <input type="radio" name="payment" value="cod" [(ngModel)]="selectedPayment" />
+              <div class="pay-icon">💵</div>
+              <div class="pay-info">
+                <div class="pay-name">Cash on Delivery</div>
+                <div class="pay-desc">Pay when order arrives</div>
+              </div>
+              <div class="pay-check" *ngIf="selectedPayment === 'cod'">✓</div>
+            </label>
+
+          </div>
+
+          <!-- ── UPI Input ── -->
+          <div class="payment-details" *ngIf="selectedPayment === 'upi'">
+            <label class="form-label">Enter UPI ID</label>
+            <input class="form-input" type="text" placeholder="yourname@upi"
+              [(ngModel)]="upiId" />
+            <p class="pay-hint">e.g. priya&#64;oksbi, 9876543210&#64;paytm</p>
+          </div>
+
+          <!-- ── Card Input ── -->
+          <div class="payment-details" *ngIf="selectedPayment === 'card'">
+            <div class="form-group">
+              <label class="form-label">Card Number</label>
+              <input class="form-input card-input" type="text"
+                placeholder="1234 5678 9012 3456"
+                [value]="cardNumber"
+                (input)="formatCard($event)"
+                maxlength="19" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Name on Card</label>
+              <input class="form-input" type="text" placeholder="PRIYA SHARMA"
+                [(ngModel)]="cardName" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Expiry Date</label>
+                <input class="form-input" type="text" placeholder="MM/YY"
+                  [(ngModel)]="cardExpiry" maxlength="5" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">CVV</label>
+                <input class="form-input" type="password" placeholder="•••"
+                  [(ngModel)]="cardCvv" maxlength="3" />
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Net Banking ── -->
+          <div class="payment-details" *ngIf="selectedPayment === 'netbanking'">
+            <label class="form-label">Select Your Bank</label>
+            <div class="bank-grid">
+              <button class="bank-btn" *ngFor="let bank of banks"
+                [class.bank-selected]="selectedBank === bank"
+                (click)="selectedBank = bank" type="button">
+                🏦 {{ bank }}
+              </button>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-back" (click)="currentStep = 1">← Back</button>
+            <button class="btn-next" (click)="proceedToReview()">Review Order →</button>
+          </div>
+        </div>
+
+        <!-- ── STEP 3: REVIEW ─────────────────────────── -->
+        <div class="checkout-card" *ngIf="currentStep === 3">
+          <div class="card-title">📋 Review Your Order</div>
+
+          <!-- Address Summary -->
+          <div class="review-section">
+            <div class="review-label">
+              📦 Delivery Address
+              <button class="btn-change" (click)="currentStep = 1">Change</button>
+            </div>
+            <div class="review-value">
+              {{ address.fullName }}, {{ address.phone }}<br/>
+              {{ address.street }}, {{ address.city }},
+              {{ address.state }} — {{ address.pincode }}
+            </div>
+          </div>
+
+          <!-- Payment Summary -->
+          <div class="review-section">
+            <div class="review-label">
+              💳 Payment Method
+              <button class="btn-change" (click)="currentStep = 2">Change</button>
+            </div>
+            <div class="review-value">{{ getPaymentLabel() }}</div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-back" (click)="currentStep = 2">← Back</button>
+            <button class="btn-place-order" (click)="placeOrder()" [disabled]="loading">
+              <span *ngIf="!loading">✓ Place Order</span>
+              <span *ngIf="loading" class="loading-dots">Placing<span>.</span><span>.</span><span>.</span></span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ══ ORDER SUMMARY ═════════════════════════ -->
+      <div class="order-summary-card">
+        <div class="summary-title">Your Order ({{ items.length }} items)</div>
+
+        <div class="order-item-row" *ngFor="let item of items">
+          <img class="order-item-img"
+            [src]="item.product.imageUrl || 'assets/images/placeholder.jpg'"
+            [alt]="item.product.name"
+            (error)="item.product.imageUrl = 'assets/images/placeholder.jpg'" />
+          <div class="order-item-info">
+            <div class="order-item-name">{{ item.product.name }}</div>
+            <div class="order-item-qty">Qty: {{ item.quantity }}</div>
+          </div>
+          <div class="order-item-price">₹{{ item.product.price * item.quantity | number }}</div>
+        </div>
+
+        <hr class="summary-divider" />
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₹{{ total | number }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Delivery</span>
+          <span class="free-delivery">FREE</span>
+        </div>
+
+        <hr class="summary-divider" />
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>₹{{ total | number }}</span>
+        </div>
+
+        <div class="secure-badge">🔒 100% Secure Checkout</div>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>

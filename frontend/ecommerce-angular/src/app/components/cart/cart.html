@@ -1,0 +1,58 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Shopping Cart</h1>
+      <p class="page-subtitle">{{ items.length }} item(s) in your cart</p>
+    </div>
+  </div>
+
+  <!-- Empty Cart -->
+  <div class="empty-cart" *ngIf="items.length === 0">
+    <div class="empty-cart-icon">🛒</div>
+    <h2 class="empty-title">Your cart is empty</h2>
+    <p style="color:#6b7280">Add some products to get started!</p>
+    <a class="btn-shop" routerLink="/products">Browse Products</a>
+  </div>
+
+  <!-- Cart with Items -->
+  <div class="cart-layout" *ngIf="items.length > 0">
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let item of items">
+        <img class="cart-item-img"
+          [src]="item.product.imageUrl || 'https://picsum.photos/seed/' + item.product.productId + '/200/200'"
+          [alt]="item.product.name"
+          (error)="item.product.imageUrl = 'https://picsum.photos/seed/' + item.product.productId + '/200/200'" />
+        <div class="cart-item-info">
+          <div class="cart-item-name">{{ item.product.name }}</div>
+          <div class="cart-item-price">₹{{ item.product.price }} each</div>
+          <div class="cart-qty">
+            <button class="cart-qty-btn" (click)="decrement(item.product.productId)">−</button>
+            <span class="cart-qty-num">{{ item.quantity }}</span>
+            <button class="cart-qty-btn" (click)="increment(item.product.productId)">+</button>
+            <button class="btn-remove" (click)="cartService.removeFromCart(item.product.productId)">Remove</button>
+          </div>
+        </div>
+        <div class="cart-item-subtotal">₹{{ item.product.price * item.quantity }}</div>
+      </div>
+    </div>
+
+    <div class="cart-summary">
+      <div class="summary-title">Order Summary</div>
+      <div class="summary-row" *ngFor="let item of items">
+        <span>{{ item.product.name }} x{{ item.quantity }}</span>
+        <span>₹{{ item.product.price * item.quantity }}</span>
+      </div>
+      <hr class="summary-divider" />
+      <div class="summary-total">
+        <span>Total</span>
+        <span>₹{{ cartService.getTotal() }}</span>
+      </div>
+      <button class="btn-checkout" (click)="router.navigate(['/checkout'])">
+        Proceed to Checkout →
+      </button>
+      <a routerLink="/products" style="display:block; text-align:center; margin-top:1rem; color:#6b7280; font-size:0.875rem;">
+        ← Continue Shopping
+      </a>
+    </div>
+  </div>
+</div>

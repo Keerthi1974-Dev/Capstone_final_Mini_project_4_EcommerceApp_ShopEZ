@@ -27,7 +27,7 @@ public class AuthControllerTests : IDisposable
         _authServiceMock = new Mock<IAuthService>();
         _controller = new AuthController(_context, _authServiceMock.Object);
 
-        // Provide a mock HttpContext so cookies work
+        // Provided a mock HttpContext so cookies work
         _controller.ControllerContext = new ControllerContext
         {
             HttpContext = new DefaultHttpContext()
@@ -36,7 +36,7 @@ public class AuthControllerTests : IDisposable
 
     public void Dispose() => _context.Dispose();
 
-    // ── Register ──────────────────────────────────────────────────────────────
+    // ── Register ─────
 
     [Fact]
     public async Task Register_ValidRequest_ReturnsOk()
@@ -191,7 +191,7 @@ public class AuthControllerTests : IDisposable
         result.Should().BeOfType<OkObjectResult>();
     }
 
-    // ── Refresh ───────────────────────────────────────────────────────────────
+    // ── Refresh ────────────────────
 
     [Fact]
     public async Task Refresh_NoRefreshCookie_ReturnsUnauthorized()

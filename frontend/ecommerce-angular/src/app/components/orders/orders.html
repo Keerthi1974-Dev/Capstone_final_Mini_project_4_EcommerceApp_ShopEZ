@@ -1,0 +1,160 @@
+<div class="orders-page">
+
+  <!-- HEADER -->
+  <div class="orders-header">
+    <div>
+      <h1 class="orders-title">My Orders</h1>
+      <p class="orders-subtitle">Track all your purchases</p>
+    </div>
+    <a routerLink="/products" class="btn-shop-more">+ Shop More</a>
+  </div>
+
+  <!-- ERROR -->
+  <div class="err-banner" *ngIf="error">
+    ⚠ Could not load orders. Make sure you are logged in and backend is running.
+  </div>
+
+  <!-- LOADING -->
+  <div class="orders-list" *ngIf="loading">
+    <div class="skeleton-card" *ngFor="let i of skeletons">
+      <div class="skeleton-row">
+        <div class="sk skeleton-shimmer" style="width:120px; height:14px;"></div>
+        <div class="sk skeleton-shimmer" style="width:80px; height:14px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPTY -->
+  <div class="empty-state" *ngIf="!loading && !error && orders.length === 0">
+    <div class="empty-icon">📦</div>
+    <div class="empty-title">No orders yet</div>
+    <a routerLink="/products" class="btn-browse">Browse Collection</a>
+  </div>
+
+  <!-- ORDERS -->
+  <div class="orders-list" *ngIf="!loading && orders.length > 0">
+
+    <div class="order-card" *ngFor="let order of orders; let i = index">
+
+      <!-- HEADER -->
+      <div class="order-card-header" (click)="toggleOrder(order.orderId)">
+
+        <div class="order-left">
+          <div class="order-id">Order #{{ order.orderId }}</div>
+          <div class="order-date">
+            {{ order.orderDate | date:'dd MMM yyyy, hh:mm a' }}
+          </div>
+          <div class="order-items-count">
+            {{ getTotalItems(order) }} item(s)
+          </div>
+        </div>
+
+        <div class="order-right">
+          <span class="order-status-badge">✓ Confirmed</span>
+          <div class="order-amount">₹{{ order.totalAmount }}</div>
+          <span class="expand-icon">
+            {{ expandedOrderId === order.orderId ? '▲' : '▼' }}
+          </span>
+        </div>
+
+      </div>
+
+      <!-- BODY (EXPANDABLE) -->
+      <div class="order-card-body"
+           [class.expanded]="expandedOrderId === order.orderId">
+
+        <!-- PRODUCT IMAGES -->
+        <div class="order-thumbs">
+          <img
+            *ngFor="let item of order.items"
+            [src]="item.imageUrl || 'https://via.placeholder.com/60'"
+            [alt]="item.productName"
+            class="order-thumb"
+            (error)="$event.target.src='https://via.placeholder.com/60'"
+          />
+        </div>
+
+        <!-- TABLE -->
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of order.items">
+              <td class="td-name">{{ item.productName }}</td>
+              <td>{{ item.quantity }}</td>
+              <td class="td-price">₹{{ item.price }}</td>
+              <td class="td-price">
+                ₹{{ item.price * item.quantity }}
+              </td>
+            </tr>
+          </tbody>
+
+          <tfoot>
+            <tr>
+              <td colspan="3" class="td-total-label">Total</td>
+              <td class="td-total-amount">
+                ₹{{ order.totalAmount }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- DELIVERY TRACK -->
+        <div class="delivery-track">
+
+          <div class="track-step track-done">
+            <div class="track-dot">✓</div>
+            <div class="track-info">
+              <div class="track-label">Order Placed</div>
+              <div class="track-date">
+                {{ order.orderDate | date:'dd MMM yyyy' }}
+              </div>
+            </div>
+          </div>
+
+          <div class="track-line track-done"></div>
+
+          <div class="track-step track-done">
+            <div class="track-dot">✓</div>
+            <div class="track-info">
+              <div class="track-label">Confirmed</div>
+              <div class="track-date">Processing</div>
+            </div>
+          </div>
+
+          <div class="track-line"></div>
+
+          <div class="track-step">
+            <div class="track-dot track-pending">📦</div>
+            <div class="track-info">
+              <div class="track-label">Shipped</div>
+              <div class="track-date">Pending</div>
+            </div>
+          </div>
+
+          <div class="track-line"></div>
+
+          <div class="track-step">
+            <div class="track-dot track-pending">🏠</div>
+            <div class="track-info">
+              <div class="track-label">Delivered</div>
+              <div class="track-date">Pending</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

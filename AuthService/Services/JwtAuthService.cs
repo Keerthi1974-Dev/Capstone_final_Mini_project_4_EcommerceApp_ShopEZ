@@ -55,7 +55,7 @@ namespace AuthService.Services
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(1), // FIX: 15 mins was too short, now 1 day
+                expires: DateTime.UtcNow.AddDays(1), //  token expiry was 1 day
                 signingCredentials: creds
             );
 

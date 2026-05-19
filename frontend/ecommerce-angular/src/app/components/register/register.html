@@ -1,0 +1,103 @@
+<div class="auth-wrapper">
+  <div class="auth-left">
+    <div class="brand-content">
+      <div class="brand-logo">
+        <span class="logo-icon">🛍️</span>
+        <span class="logo-text">ShopEZ</span>
+      </div>
+      <h1 class="brand-headline">Start shopping<br/>smarter today</h1>
+      <p class="brand-sub">Join thousands of happy customers on ShopEZ.</p>
+      <div class="feature-list">
+        <div class="feature-item"><span class="fi-icon">✓</span> Free account forever</div>
+        <div class="feature-item"><span class="fi-icon">✓</span> Browse 1000+ products</div>
+        <div class="feature-item"><span class="fi-icon">✓</span> Easy order management</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <h2 class="auth-title">Create account</h2>
+      <p class="auth-subtitle">Sign up for ShopEZ — it's free</p>
+
+      <div class="success-banner" *ngIf="message">✓ {{ message }}</div>
+      <div class="error-banner" *ngIf="error">⚠ {{ error }}</div>
+
+      <form #regForm="ngForm" (ngSubmit)="register(regForm)" novalidate>
+
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input class="form-input"
+            [class.input-error]="nameField.invalid && nameField.touched"
+            type="text" name="name" placeholder="John Doe"
+            [(ngModel)]="name" #nameField="ngModel" required minlength="2" />
+          <div class="field-error" *ngIf="nameField.invalid && nameField.touched">
+            <span *ngIf="nameField.errors?.['required']">Name is required</span>
+            <span *ngIf="nameField.errors?.['minlength']">Minimum 2 characters</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input class="form-input"
+            [class.input-error]="emailField.invalid && emailField.touched"
+            type="email" name="email" placeholder="you@example.com"
+            [(ngModel)]="email" #emailField="ngModel" required email />
+          <div class="field-error" *ngIf="emailField.invalid && emailField.touched">
+            <span *ngIf="emailField.errors?.['required']">Email is required</span>
+            <span *ngIf="emailField.errors?.['email']">Enter a valid email</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-with-icon">
+              <input class="form-input"
+                [class.input-error]="passField.invalid && passField.touched"
+                [type]="showPassword ? 'text' : 'password'" name="password"
+                placeholder="Min 6 characters"
+                [(ngModel)]="password" #passField="ngModel" required minlength="6" />
+              <button type="button" class="toggle-pass" (click)="showPassword = !showPassword">
+                {{ showPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            <div class="field-error" *ngIf="passField.invalid && passField.touched">
+              <span *ngIf="passField.errors?.['required']">Password required</span>
+              <span *ngIf="passField.errors?.['minlength']">Min 6 characters</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <input class="form-input"
+              [class.input-error]="(confirmField.touched && confirmField.invalid) || passwordMismatch"
+              type="password" name="confirmPassword" placeholder="Repeat password"
+              [(ngModel)]="confirmPassword" #confirmField="ngModel" required />
+            <div class="field-error" *ngIf="passwordMismatch">Passwords do not match</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Account Type</label>
+          <div class="role-selector">
+            <label class="role-option" [class.role-active]="role === 'User'">
+              <input type="radio" name="role" value="User" [(ngModel)]="role" /> 👤 Customer
+            </label>
+            <label class="role-option" [class.role-active]="role === 'Admin'">
+              <input type="radio" name="role" value="Admin" [(ngModel)]="role" /> 🛠 Admin
+            </label>
+          </div>
+        </div>
+
+        <button class="btn-primary" type="submit" [disabled]="loading || message">
+          <span *ngIf="!loading">Create Account</span>
+          <span *ngIf="loading">Creating...</span>
+        </button>
+
+      </form>
+
+      <p class="auth-switch">Already have an account? <a routerLink="/login" class="auth-link">Sign in</a></p>
+    </div>
+  </div>
+</div>
