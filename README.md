@@ -13,27 +13,42 @@ A full-stack e-commerce application built with **.NET Microservices** on the bac
 
 
 ### 🔍 Search & Category Filter![Uploading product_listing.jpeg…]()
+<img width="1600" height="804" alt="search category" src="https://github.com/user-attachments/assets/207a68ef-9b8a-40b5-9b2a-e1812f2a87a1" />
 
-![Search and Filter](![Uploading image.png…]()
-)
+
 
 ### 🛍️ Product Details
-![Product Details](screenshots/product-details.png)
+<img width="1600" height="808" alt="product-details" src="https://github.com/user-attachments/assets/f475e9e2-5b44-4ad6-af39-b39c90afe209" />
+
+
 
 ### 🛒 Shopping Cart
-![Cart](screenshots/cart.png)
+<img width="1600" height="788" alt="shoppingCart" src="https://github.com/user-attachments/assets/ace02409-3f88-45ac-884b-1be134e564e6" />
+
+
 
 ### 💳 Checkout — Address Step
-![Checkout Address](screenshots/checkout-address.png)
+
+<img width="1600" height="811" alt="Addressstep" src="https://github.com/user-attachments/assets/e0290984-0e87-4e78-a8a4-dfbe59e76b81" />
+
+
 
 ### 💳 Checkout — Payment Step
-![Checkout Payment](screenshots/checkout-payment.png)
+<img width="1600" height="775" alt="checkout" src="https://github.com/user-attachments/assets/2a5baaea-ab22-476a-8e8e-2c458060b695" /><img width="1600" height="802" alt="payment method" src="https://github.com/user-attachments/assets/75680341-8bf9-4f49-b408-b284eead373a" />
+
+
+
 
 ### 💳 Checkout — Review & Place Order
-![Checkout Review](screenshots/checkout-review.png)
+
+<img width="1600" height="797" alt="orders" src="https://github.com/user-attachments/assets/b7c04293-c002-49e8-9b44-fa4d2ff158f2" />
+
+<img width="1600" height="809" alt="Review" src="https://github.com/user-attachments/assets/31065874-0e35-47fa-a82e-d9db0e0bf6a0" />
 
 ### 📋 My Orders
-![Orders](screenshots/orders.png)
+
+
+
 
 ### 🛠️ Admin Panel
 ![Admin Panel](screenshots/admin-panel.png)
