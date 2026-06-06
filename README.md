@@ -19,6 +19,8 @@ A full-stack e-commerce application built with **.NET Microservices** on the bac
 
 ### 🛍️ Product Details
 <img width="1600" height="808" alt="product-details" src="https://github.com/user-attachments/assets/f475e9e2-5b44-4ad6-af39-b39c90afe209" />
+<img width="1600" height="789" alt="img1" src="https://github.com/user-attachments/assets/7f0df538-3cf2-4082-98a9-e3e6c9283d39" />
+
 
 
 
@@ -46,17 +48,26 @@ A full-stack e-commerce application built with **.NET Microservices** on the bac
 <img width="1600" height="809" alt="Review" src="https://github.com/user-attachments/assets/31065874-0e35-47fa-a82e-d9db0e0bf6a0" />
 
 ### 📋 My Orders
+<img width="1600" height="800" alt="order processing" src="https://github.com/user-attachments/assets/58e4a7d2-dfe5-46aa-a769-5d5f23d70981" />
 
 
 
 
 ### 🛠️ Admin Panel
-![Admin Panel](screenshots/admin-panel.png)
+
+
+<img width="1600" height="777" alt="Admin" src="https://github.com/user-attachments/assets/4fbd4081-4ae2-4ae2-891e-d327ed51bb60" />
+
+
 
 ### 🔐 Login & Register
-![Login](screenshots/login.png)
 
----
+<img width="1600" height="793" alt="Login" src="https://github.com/user-attachments/assets/c85b48ee-4da8-4435-9fbe-15c1a289d218" />
+<img width="1600" height="782" alt="Home" src="https://github.com/user-attachments/assets/7c270f45-33f6-4712-bd88-19b3f61bc081" />
+
+
+
+
 
 ## 📌 Problem Statement
 
