@@ -9,7 +9,8 @@ A full-stack e-commerce application built with **.NET Microservices** on the bac
 > Run the app with `docker-compose up --build`, open http://localhost:4200, take your screenshots, save them in a `screenshots/` folder in the project root, and they will appear here automatically.
 
 ### 🏠 Home — Product Listing
-![Product Listing](![Uploading products page.png…]()
+![Product Listing](![<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/2ba62c72-1583-4caa-9409-8a3694e9c4f3" />
+]()
 )
 
 ### 🔍 Search & Category Filter
